@@ -1,0 +1,13 @@
+<div class="modal-body">
+    <p>{{message}}</p>
+</div>
+
+    
+<div class="modal-footer" *ngIf="removeData">
+    <button class="btn btn-primary" md-raised-button (click)="removeItemAccount()">Yes</button>
+    <button class="btn btn-danger" md-raised-button (click)="dialogRef.close()">No</button>
+</div>
+<div class="modal-footer" *ngIf="closedAccount">
+    <button class="btn btn-info" md-raised-button (click)="closeAccount()">Yes</button>
+    <button class="btn btn-danger" md-raised-button (click)="dialogRef.close()">No</button>
+</div>

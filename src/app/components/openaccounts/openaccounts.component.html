@@ -1,0 +1,79 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <p class="navbar-text">
+      Hello, {{user.name}}
+      <span style="float: right;">
+        <a (click)="onLogoutClick()">Logout</a>
+      </span>
+    </p>
+  </div>
+</nav>
+
+<div class="container" style="margin-top: 70px; margin-bottom: 60px;">
+
+  <div class="form-group">
+    <button class="btn btn-block btn-primary" (click)="updateView()">
+      Update View
+    </button>
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">
+      <i class="glyphicon glyphicon-search"></i>
+    </span>
+    <input type="text" class="form-control" [(ngModel)]="searchText" name="searchText"
+    placeholder="Search by customer" aria-describedby="basic-addon1">
+  </div>
+
+  <br>
+
+  <ul class="media-list">
+    <li style="font-size: 16px;" class="media list-group-item" [ngClass]="{atc: account.status == askedToClose}"
+     *ngFor="let account of openedAccounts | filter: searchText; let i = index">
+      <div class="media-heading">
+        <p>
+          <span>{{account.customer.username}}</span>
+          <span style="float: right">Table: {{account.table}}</span>
+        </p>
+        <a style="margin-left: -10px;" class="btn btn-link" (click)="toggle[i] = !toggle[i]">
+          <span class="glyphicon glyphicon-plus-sign" *ngIf="!toggle[i]"></span>
+          <span class="glyphicon glyphicon-minus-sign" *ngIf="toggle[i]"></span>
+        </a>
+      </div>
+      <div class="media-body">
+        <ul *ngIf="toggle[i]" class="list-group">
+          <li style="font-size: 14px; margin-bottom: -10px;" class="list-group-item" *ngFor="let item of account.orderedItens">
+            <span>
+              {{item.orderedItem.name}} / {{item.status}}
+              <i style="float: right; font-size: 16px; color: red;" class="fa fa-trash-o" (click)="removeItem(account, item)"></i>
+            </span>
+            <br/> Comments:
+            <span style="float: right;">
+               {{item.orderedItem.price | currency:'AUD':true}}
+             </span>
+            <br/> {{item.comments}}
+          </li>
+        </ul>
+      </div>
+      <div class="media-bottom">
+        <span >Account: {{account.counter}}</span>
+        <span (click)="closeAccount(account)" style="margin-left: 40px;
+                                                      color: limegreen;">
+          <strong>Close it
+            <i class="fa fa-check-square-o"></i>
+          </strong>
+        </span>
+        <span style="float: right;">{{account.price | currency:'AUD':true}}</span>
+      </div>
+    </li>
+  </ul>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+    <p class="navbar-text" style="text-align: center">
+      Dajo RS
+    </p>
+  </div>
+</nav>
